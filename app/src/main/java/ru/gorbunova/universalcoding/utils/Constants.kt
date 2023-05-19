@@ -8,6 +8,7 @@ lateinit var REPOSITORY: DatabaseRepository
 object  Constants {
     //const val THEORY = "Theory"
     //const val TEST = "Test"
+    const val RESULT = "result"
 
     object Keys {
         const val APP_DATABASE = "app_database.db"
@@ -21,5 +22,7 @@ object  Constants {
         const val TOPIC_SCREEN = "topic_screen"
         const val TEST_SCREEN = "test_screen"
         const val THEORY_SCREEN = "theory_screen"
+        const val TEST_START_SCREEN = "test_start_screen"
+        const val TEST_STOP_SCREEN = "test_stop_screen"
     }
 }

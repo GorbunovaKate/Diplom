@@ -21,7 +21,6 @@ class MainViewModel (application: Application) : AndroidViewModel(application) {
 
     fun readAllTheory() = REPOSITORY.readAll
     fun readAllQuestion() = REPOSITORY.readAllQuestion
-
 }
 
 class MainViewModelFactory(private val application: Application): ViewModelProvider.Factory{

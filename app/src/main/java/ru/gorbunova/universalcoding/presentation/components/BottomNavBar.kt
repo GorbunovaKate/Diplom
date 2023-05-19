@@ -33,7 +33,7 @@ fun BottomNavBar(navController: NavController) {
             label = ""
             //label = THEORY
         ),
-        NavRoute.Test to ItemGroup(
+        NavRoute.Test_Start to ItemGroup(
             filledIcon = Icons.Filled.Ballot,
             outlineIcon = Icons.Outlined.Ballot,
             label = ""
