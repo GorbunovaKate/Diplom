@@ -12,6 +12,7 @@ import ru.gorbunova.universalcoding.presentation.screens.TheoryScreen
 import ru.gorbunova.universalcoding.presentation.screens.TopicScreen
 import ru.gorbunova.universalcoding.utils.Constants.Keys.ID
 import ru.gorbunova.universalcoding.utils.Constants.RESULT
+import ru.gorbunova.universalcoding.utils.Constants.SUM
 import ru.gorbunova.universalcoding.utils.Constants.Screens.TEST_SCREEN
 import ru.gorbunova.universalcoding.utils.Constants.Screens.TEST_START_SCREEN
 import ru.gorbunova.universalcoding.utils.Constants.Screens.TEST_STOP_SCREEN
@@ -40,8 +41,10 @@ fun AppNavHost(mViewModel: MainViewModel){
         composable(NavRoute.Theory.route){TheoryScreen(navController, viewModel = mViewModel)}
         composable(NavRoute.Test.route){TestScreen(navController, viewModel = mViewModel)}
         composable(NavRoute.Test_Start.route){TestStartScreen(navController)}
-        composable(NavRoute.Test_Stop.route){TestStopScreen(navController)}
+        //composable(NavRoute.Test_Stop.route){TestStopScreen(navController)}
 
+        composable(NavRoute.Test_Stop.route + "/{${SUM}}") { backStackEntry ->
+            TestStopScreen(navController = navController, numCorrect = backStackEntry.arguments?.getString(SUM))}
 
         composable(NavRoute.Topic.route + "/{${ID}}") { backStackEntry ->
             TopicScreen(navController = navController, viewModel = mViewModel, noteId = backStackEntry.arguments?.getString(ID))

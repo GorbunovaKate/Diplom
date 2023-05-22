@@ -20,7 +20,8 @@ import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TestStopScreen (navController: NavHostController) {
+fun TestStopScreen (navController: NavHostController, numCorrect: String?) {
+
     Scaffold(
         bottomBar = {
             BottomNavBar(navController)
@@ -34,7 +35,7 @@ fun TestStopScreen (navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
-                text = "Вы прошли тест на 3 из 5",
+                text = "Вы прошли тест $numCorrect на  из 5",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 //textAlign = TextAlign.Justify

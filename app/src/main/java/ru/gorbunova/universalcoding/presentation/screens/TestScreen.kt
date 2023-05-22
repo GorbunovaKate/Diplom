@@ -29,10 +29,10 @@ import ru.gorbunova.universalcoding.data.model.Test
 import ru.gorbunova.universalcoding.utils.Constants
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
@@ -119,10 +119,14 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                         scope.launch {
                             snackbarHostState.value.showSnackbar("$numCorrect out of ${questions.size} answers are correct.")
                         }
+
+                            navController.navigate(NavRoute.Test_Stop.route + "/${numCorrect}")
                     } else {
                         currentQuestionIndex++
                         selectedOption = ""
                     }
+
+
                 }
             ) {
                 if (currentQuestionIndex == questions.lastIndex) {

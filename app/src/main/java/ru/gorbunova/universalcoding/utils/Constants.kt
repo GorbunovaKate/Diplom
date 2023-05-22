@@ -9,6 +9,7 @@ object  Constants {
     //const val THEORY = "Theory"
     //const val TEST = "Test"
     const val RESULT = "result"
+    const val SUM = "numCorrect"
 
     object Keys {
         const val APP_DATABASE = "app_database.db"
