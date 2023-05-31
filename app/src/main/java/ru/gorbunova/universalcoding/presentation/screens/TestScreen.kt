@@ -33,7 +33,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
 import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
 
@@ -119,14 +119,11 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                         scope.launch {
                             snackbarHostState.value.showSnackbar("$numCorrect out of ${questions.size} answers are correct.")
                         }
-
                             navController.navigate(NavRoute.Test_Stop.route + "/${numCorrect}")
                     } else {
                         currentQuestionIndex++
                         selectedOption = ""
                     }
-
-
                 }
             ) {
                 if (currentQuestionIndex == questions.lastIndex) {
@@ -138,91 +135,3 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
             SnackbarHost(snackbarHostState.value)
     }
 }
-
-/*@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
-
-    val tests = viewModel.readAllQuestion().observeAsState(listOf()).value
-
-    val currentQuestionId = remember { mutableStateOf(0) }
-
-    val question = tests.getOrNull(currentQuestionId.value) ?: Test(
-        question = Constants.Keys.NONE,
-        answer_1 = Constants.Keys.NONE,
-        answer_2 = Constants.Keys.NONE,
-        answer_3 = Constants.Keys.NONE,
-        answer_4 = Constants.Keys.NONE,
-        correct_answer = 0
-    )
-
-    val answers = listOf(
-        question.answer_1,
-        question.answer_2,
-        question.answer_3,
-        question.answer_4
-    ).filter { it.isNotEmpty() }
-
-    var selectedOption by remember { mutableStateOf("") } // initialize with empty string
-    var numCorrectAnswers by remember { mutableStateOf(0) }
-
-    Column(Modifier.selectableGroup()
-        .padding(vertical = 8.dp, horizontal = 24.dp)
-        .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-        Text(
-            text = question.question,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            //textAlign = TextAlign.Justify
-        )
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 8.dp)
-
-        ) {
-            answers.forEach { text ->
-                Row {
-                    RadioButton(
-                        selected = (text == selectedOption),
-                        onClick = { selectedOption = text}
-                    )
-                    Text(text = text, fontSize = 22.sp)
-                }
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            if (question.id > 1) {
-                Button(onClick = {
-
-                    currentQuestionId.value-- }) {
-                    Text("Предыдущий вопрос")
-                }
-            }
-            if (question.id < tests.size) {
-                Button(onClick = {
-                    if (selectedOption.isNotEmpty()) {
-                        if (answers.indexOf(selectedOption) == question.correct_answer - 1) {
-                            numCorrectAnswers++
-                        }
-                        currentQuestionId.value++
-                    }
-                })
-                {
-                    Text("Следующий вопрос")
-                }
-            } else {
-                Button(onClick = {
-                    //navController.navigate(NavRoute.Test_Stop.route)
-                })
-                {Text("Завершить тест")}
-            }
-        }
-    }
-}*/
