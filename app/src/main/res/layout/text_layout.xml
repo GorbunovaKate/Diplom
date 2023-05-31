@@ -9,8 +9,16 @@
         android:id="@+id/math_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:jlmv_background="@color/white"
-        app:jlmv_textColor="@color/black"
+        app:jlmv_background="@color/light_background"
+        app:jlmv_textColor="@color/light_onBackground"
+        app:jlmv_textSize="14sp" />
+
+    <ru.noties.jlatexmath.JLatexMathView
+        android:id="@+id/dark_math_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:jlmv_background="@color/dark_background"
+        app:jlmv_textColor="@color/dark_onBackground"
         app:jlmv_textSize="14sp" />
 
 </LinearLayout>

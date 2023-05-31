@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
                     viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
                 mViewModel.initDatabase()
 
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
