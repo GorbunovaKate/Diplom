@@ -2,13 +2,17 @@ package ru.gorbunova.universalcoding.presentation.screens
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.West
 import androidx.compose.material3.AlertDialog
@@ -37,6 +41,10 @@ import ru.gorbunova.universalcoding.data.model.Test
 import ru.gorbunova.universalcoding.utils.Constants
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextIndent
+import ru.gorbunova.universalcoding.presentation.components.Alert_Dialog
+import ru.gorbunova.universalcoding.presentation.components.NumbersQuestions
 import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,14 +85,16 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
     var selectedOption by remember { mutableStateOf("") }
     var numCorrect by remember { mutableStateOf(0) }
 
-    var showDialog by remember { mutableStateOf(false) }
+    val showDialog = remember { mutableStateOf(false) }
+
+    var isAnswerCorrect by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    IconButton(onClick = {  showDialog = true }) {
+                    IconButton(onClick = {  showDialog.value = true }) {
                         Icon(
                             imageVector = Icons.Default.West,
                             contentDescription = "Назад"
@@ -100,35 +110,42 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
             Column(
                 Modifier
                     .selectableGroup()
-                    .padding(vertical = 8.dp, horizontal = 24.dp)
+                    .padding(vertical = 2.dp, horizontal = 24.dp)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
+                NumbersQuestions(questions = questions, isAnswerCorrect = isAnswerCorrect, currentQuestionIndex = currentQuestionIndex)
                 Text(
                     text = question_1.question,
                     fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        textIndent = TextIndent(25.sp, 10.sp)
+                    ),
+                    lineHeight = 30.sp,
             )
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp, horizontal = 8.dp)
+                    .padding(vertical = 8.dp, horizontal = 3.dp)
 
             ) {
                     radioOptions.forEach { text ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp)
                     ) {
                         RadioButton(
                             selected = selectedOption == text,
                             onClick = { selectedOption = text },
-                            modifier = Modifier.padding(horizontal = 16.dp),
+                            //modifier = Modifier.padding(horizontal = 16.dp),
                         )
                         Text(
                             text = text,
-                            modifier = Modifier.padding(start = 16.dp),
+                            //modifier = Modifier.padding(start = 16.dp),
                             fontSize = 22.sp
                         )
                     }
@@ -140,6 +157,12 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                     val answerIndex = radioOptions.indexOf(selectedOption)
                     if (answerIndex == correctAnswerIndex - 1) {
                         numCorrect++
+                        isAnswerCorrect = true
+                        //List_Answers.add("green")
+                    }
+                    else {
+                        isAnswerCorrect = false
+                        //List_Answers.add("red")
                     }
                     if (currentQuestionIndex == questions.lastIndex) {
                         navController.navigate(NavRoute.Test_Stop.route + "/${numCorrect}")
@@ -157,22 +180,8 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
             }
         }
     }
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            title = { Text(text = "Continue test?") },
-            text = { Text(text = "Do you want to continue the test or exit to the main menu?") },
-            confirmButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text(text = "Continue test")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { navController.navigate(NavRoute.Test_Start.route) }) {
-                    Text(text = "Exit to main menu")
-                }
-            }
-        )
+    if (showDialog.value) {
+        Alert_Dialog(showDialog = showDialog, navController = navController)
     }
-    BackHandler(enabled = true, onBack = {showDialog = true})
+    BackHandler(enabled = true, onBack = {showDialog.value = true})
 }
