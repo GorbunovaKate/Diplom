@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -39,9 +40,9 @@ fun NumbersQuestions(
                     .size(50.dp)
                     .background(
                         when (i) {
-                            currentQuestionIndex -> if (List_Answers[i - 1] == "green") Color.Green else Color.Red
-                            in 1..currentQuestionIndex -> if (List_Answers[i - 1] == "green") Color.Green else Color.Red
-                            else -> Color.White
+                            currentQuestionIndex -> if (List_Answers[i - 1] == "green") Color(0XFF4CBB17) else MaterialTheme.colorScheme.error
+                            in 1..currentQuestionIndex -> if (List_Answers[i - 1] == "green") Color(0XFF4CBB17) else MaterialTheme.colorScheme.error
+                            else -> MaterialTheme.colorScheme.background
                         },
                         CircleShape
                     ),
@@ -49,7 +50,7 @@ fun NumbersQuestions(
             ) {
                 Text(
                     text = i.toString(),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 24.sp
                 )
             }

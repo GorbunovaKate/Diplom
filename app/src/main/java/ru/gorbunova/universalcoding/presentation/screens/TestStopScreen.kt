@@ -21,7 +21,6 @@ import ru.gorbunova.universalcoding.presentation.components.BottomNavBar
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TestStopScreen (navController: NavHostController, numCorrect: String?) {
-
     Scaffold(
         bottomBar = {
             BottomNavBar(navController)
