@@ -42,9 +42,10 @@ import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
 
     val tests = viewModel.readAllQuestion().observeAsState(listOf()).value
+    val randomQuestions = tests.shuffled().take(10)
 
     val questions = mutableListOf<Pair<String, Int>>()
-    for (test in tests) {
+    for (test in randomQuestions) {
         val question = test.question
         val correctAnswerIndex = test.correct_answer
         if (question != Constants.Keys.NONE) {
@@ -54,7 +55,7 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
 
     var currentQuestionIndex by remember { mutableStateOf(0) }
 
-    val question_1 = tests.getOrNull(currentQuestionIndex) ?: Test(
+    val question_1 = randomQuestions.getOrNull(currentQuestionIndex) ?: Test(
         question = Constants.Keys.NONE,
         answer_1 = Constants.Keys.NONE,
         answer_2 = Constants.Keys.NONE,

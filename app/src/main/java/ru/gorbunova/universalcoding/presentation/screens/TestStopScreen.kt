@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -16,15 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ru.gorbunova.universalcoding.presentation.components.BottomNavBar
+import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TestStopScreen (navController: NavHostController, numCorrect: String?) {
     Scaffold(
-        bottomBar = {
-            BottomNavBar(navController)
-        }
     ) {
         Column(
             modifier = Modifier
@@ -34,14 +33,20 @@ fun TestStopScreen (navController: NavHostController, numCorrect: String?) {
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
-                text = "Вы прошли тест $numCorrect на  из 5",
+                text = "Ваш результат $numCorrect правильных ответов.",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 //textAlign = TextAlign.Justify
             )
-           /* Button(onClick = { navController.navigate(NavRoute.Test.route) }) {
-                Text(text = "Да")
-            }*/
+
+            Button(onClick = { navController.navigate(NavRoute.Test_Start.route) }) {
+                Text(text = "Хорошо")
+            }
+
+            Button(onClick = { navController.navigate(NavRoute.Test.route) }) {
+                Text(text = "Пере пройти тест")
+            }
+
         }
     }
 }

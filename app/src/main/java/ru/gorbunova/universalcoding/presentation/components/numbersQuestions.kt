@@ -37,7 +37,7 @@ fun NumbersQuestions(
         for (i in 1..questions.size) {
             Box(
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(25.dp)
                     .background(
                         when (i) {
                             currentQuestionIndex -> if (List_Answers[i - 1] == "green") Color(0XFF4CBB17) else MaterialTheme.colorScheme.error
@@ -51,7 +51,7 @@ fun NumbersQuestions(
                 Text(
                     text = i.toString(),
                     color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 24.sp
+                    fontSize = 19.sp
                 )
             }
         }
