@@ -40,10 +40,11 @@ import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
-
+    //Список всех вопросов из таблицы
     val tests = viewModel.readAllQuestion().observeAsState(listOf()).value
-    val randomQuestions = tests.shuffled().take(10)
-
+    //Перемешывание всех вопросов и ограничение на 10 вопросов
+    val randomQuestions = remember(tests) { tests.shuffled().take(10).distinctBy { it.id } }
+    //Список Воаросов и правельных ответов для него
     val questions = mutableListOf<Pair<String, Int>>()
     for (test in randomQuestions) {
         val question = test.question
@@ -91,6 +92,7 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 NumbersQuestions(questions = questions, isAnswerCorrect = isAnswerCorrect, currentQuestionIndex = currentQuestionIndex)
+
                 Text(
                     text = question_1.question,
                     fontSize = 24.sp,
@@ -133,11 +135,9 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                     if (answerIndex == correctAnswerIndex - 1) {
                         numCorrect++
                         isAnswerCorrect = true
-                        //List_Answers.add("green")
                     }
                     else {
                         isAnswerCorrect = false
-                        //List_Answers.add("red")
                     }
                     if (currentQuestionIndex == questions.lastIndex) {
                         navController.navigate(NavRoute.Test_Stop.route + "/${numCorrect}")
@@ -150,7 +150,7 @@ fun TestScreen(navController: NavHostController, viewModel: MainViewModel) {
                 if (currentQuestionIndex == questions.lastIndex) {
                     Text(text = "Завершить тест")
                 } else {
-                    Text(text = "Следующий вопрос")
+                    Text(text = ">>")
                 }
             }
         }

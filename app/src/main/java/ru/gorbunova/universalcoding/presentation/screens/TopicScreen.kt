@@ -28,6 +28,7 @@ import ru.gorbunova.universalcoding.data.model.Theory
 import ru.gorbunova.universalcoding.presentation.components.TopNavBar
 import ru.gorbunova.universalcoding.utils.Constants
 import ru.gorbunova.universalcoding.presentation.components.XML_in
+import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,13 +50,13 @@ fun TopicScreen(navController: NavHostController, viewModel: MainViewModel, note
     ) {
         Column(
             modifier = Modifier
-                .padding(20.dp)
+                .padding(23.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = lesson.title,
-                fontSize = 24.sp,
+                fontSize = 27.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 32.dp)
             )
@@ -70,7 +71,7 @@ fun TopicScreen(navController: NavHostController, viewModel: MainViewModel, note
                         },
                         modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
-                        Text(text = "Предыдущая тема")
+                        Text(text = "<<")
                     }
                 }
                 if (currentLessonId < lessons.size) {
@@ -80,7 +81,17 @@ fun TopicScreen(navController: NavHostController, viewModel: MainViewModel, note
                         },
                         modifier = Modifier.padding(horizontal = 16.dp)
                     ) {
-                        Text(text = "Следующая тема")
+                        Text(text = ">>")
+                    }
+                }
+                if (currentLessonId == lessons.size) {
+                    Button(
+                        onClick = {
+                            navController.navigate(NavRoute.Test_Start.route)
+                        },
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        Text(text = "Пройти тест")
                     }
                 }
             }

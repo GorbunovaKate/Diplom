@@ -28,7 +28,6 @@ sealed class NavRoute(val route: String){
 
 val screens = listOf(
     NavRoute.Theory,
-    //NavRoute.Test
     NavRoute.Test_Start
 )
 
@@ -44,9 +43,6 @@ fun AppNavHost(mViewModel: MainViewModel, darkTheme: Boolean, onThemeUpdated: ()
         composable(NavRoute.Test_Stop.route + "/{${SUM}}") { backStackEntry ->
             TestStopScreen(navController = navController, numCorrect = backStackEntry.arguments?.getString(SUM))}
 
-        /*composable(NavRoute.Topic.route + "/{${ID}}") { backStackEntry ->
-            TopicScreen(navController = navController, viewModel = mViewModel, noteId = backStackEntry.arguments?.getString(ID))
-        }*/
         composable(NavRoute.Topic.route + "/{${ID}}") { backStackEntry ->
             TopicScreen(navController = navController, viewModel = mViewModel, noteId = backStackEntry.arguments?.getString(ID), darkTheme = darkTheme)
         }

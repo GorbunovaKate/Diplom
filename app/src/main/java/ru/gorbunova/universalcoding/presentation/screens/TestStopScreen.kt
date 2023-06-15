@@ -1,6 +1,7 @@
 package ru.gorbunova.universalcoding.presentation.screens
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ru.gorbunova.universalcoding.presentation.components.BottomNavBar
+import ru.gorbunova.universalcoding.presentation.components.Image_Answer
 import ru.gorbunova.universalcoding.presentation.navigation.NavRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,20 +34,23 @@ fun TestStopScreen (navController: NavHostController, numCorrect: String?) {
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(
-                text = "Ваш результат $numCorrect правильных ответов.",
+                text = "Ваш результат - $numCorrect баллов.",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                //textAlign = TextAlign.Justify
+                fontWeight = FontWeight.Bold
             )
 
-            Button(onClick = { navController.navigate(NavRoute.Test_Start.route) }) {
-                Text(text = "Хорошо")
-            }
+            Image_Answer(numCorrect = numCorrect)
 
-            Button(onClick = { navController.navigate(NavRoute.Test.route) }) {
-                Text(text = "Пере пройти тест")
-            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally,verticalArrangement = Arrangement.Center) {
+                Button(onClick = { navController.navigate(NavRoute.Test_Start.route) }) {
+                    Text(text = "Хорошо")
+                }
 
+                Button(onClick = { navController.navigate(NavRoute.Test.route) }) {
+                    Text(text = "Порйти тест заново")
+                }
+            }
         }
     }
+    BackHandler(enabled = true, onBack = {navController.navigate(NavRoute.Test_Start.route)})
 }
